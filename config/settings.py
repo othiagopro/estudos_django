@@ -120,6 +120,12 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# MÍDIA
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # Onde o Django vai salvar os arquivos de mídia
+
+MEDIA_URL = '/media/' # URL para acessar os arquivos de mídia
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'config/static') # Onde estão os arquivos estáticos do projeto
 ]
