@@ -1,6 +1,8 @@
 from django.db import models
 from datetime import datetime
 
+
+
 class Fotografia(models.Model):
 
     OPCOES_CATEGORIA = [
@@ -20,4 +22,4 @@ class Fotografia(models.Model):
 
 
     def __str__(self):
-        return f"Fotografia: [nome={self.nome}]"
+        return self.nome
