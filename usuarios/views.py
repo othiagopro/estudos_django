@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from usuarios.forms import LoginForms, CadastroForms
-
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib import auth
 from django.contrib import messages
@@ -20,12 +20,12 @@ def login(request):
             password=senha) # autentica o usuário com base no nome de login e senha fornecidos #
         if usuario is not None: # verifica se a autenticação foi bem-sucedida #
             auth.login(request, usuario) # faz login do usuário autenticado #
-            messages.sucess(request, f"{nome} logado com sucesso!")
+            messages.success(request, "Login bem sucedido")
             return redirect('index') # redireciona para a página inicial após o login bem-sucedido #
         else:
-            messages.error(request, "Erro ao efetuar login!")
+            messages.error(request, "Usuario não localizado! Tente novamente")
             return redirect('login') # redireciona para a página de login se a autenticação falhar #
-            
+
     return render(request, 'usuarios/login.html', {'form': form})
 
 def cadastro(request):
@@ -35,7 +35,7 @@ def cadastro(request):
          
         if form.is_valid():
             if form['senha_cadastro'].value() != form['senha_cadastro2'].value():
-                messages.error(request, "Senhas não são iguais")
+                messages.error(request, "Senhas não coincidem")
                 return redirect('cadastro') # redireciona para a página de cadastro se as senhas não coincidirem #
             
             nome=form['nome_cadastro'].value()
@@ -43,7 +43,7 @@ def cadastro(request):
             senha=form['senha_cadastro'].value()
 
             if User.objects.filter(username=nome).exists(): # verifica se já existe um usuário com o mesmo nome de cadastro #
-                messages.error(request, "Usuario já cadastrado!")
+                messages.error(request, "Usuario já cadastrado")
                 return redirect('cadastro')
 
             usuario = User.objects.create_user(
@@ -51,7 +51,7 @@ def cadastro(request):
                 email=email, 
                 password=senha) # cria um novo usuário com os dados fornecidos #
             usuario.save()
-            messages.sucess(request, f"{nome} cadastrado com sucesso!")
+            messages.success(request, "Cadastro feito com sucesso!")
             return redirect('login') # redireciona para a página de login após o cadastro bem-sucedido #
 
     return render(request, 'usuarios/cadastro.html', {'form': form})

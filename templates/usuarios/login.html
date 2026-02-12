@@ -46,7 +46,7 @@
                 </nav>
             </section>
             <section class="galeria" style="margin-left: 5em">
-                <form action="{% url 'login' %}" method="POST"> # url de login para o form e POST para enviar os dados #
+                <form action="{% url 'login' %}" method="POST">
                     {% csrf_token %} 
                     <div class="row">
                         {% for field in form.visible_fields %}
